@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace XLXSConverter
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            Converter c = new Converter();
+            c.ConvertFrom();
         }
     }
 }
