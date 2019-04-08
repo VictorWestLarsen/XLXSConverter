@@ -34,7 +34,7 @@ namespace XLXSConverter
                 string splitted = splitter[0];
                 int category = int.Parse(splitted);
 
-                if (category > 100 )
+                if (category > 100 ) // sets category
                 {
                     bulk.Column(20).Cell(1 + i).Value = "Personal";
                 }
@@ -43,7 +43,7 @@ namespace XLXSConverter
                     bulk.Column(20).Cell(1 + i).Value = "Commercial";
                 }
 
-                for (int k = 4; k <= 8; k++)
+                for (int k = 1; k <= 4; k++)
                 {
                     string temp = ws.Worksheet.Column(3 + k).Cell(8).Value.ToString();
                     if (temp != "")
@@ -59,14 +59,66 @@ namespace XLXSConverter
                     {
                         k++;
                     }
-
                 }
 
+                string check = ",";
+                for (int h = 1; h <= 4; h++)
+                {
+                    string temp = ws.Worksheet.Column(3 + h).Cell(10).Value.ToString();
+                    if (temp != "")
+                    {
+                        bulk.Column(10).Cell(1 + h).Value = ws.Worksheet.Column(3 + h).Cell(10).Value;
+                        h++;
+                    }
+                    else if(temp.Contains(check))
+                    {
+                        string[] ccm = temp.Split(',');
+                        string litersToCcm = ccm[0] + ccm[1];
+                        int result = int.Parse(litersToCcm);
+                        int conversion = result * 1000;
+                        bulk.Worksheet.Column(10).Cell(1 + h).Value = conversion.ToString();
+                    }
+                    else
+                    {
+                        h++;
+                    }
+                }
+
+                for (int t = 1; t <= 4; t++)
+                {
+                    string temp = ws.Worksheet.Column(3 + t).Cell(11).Value.ToString();
+                    if (temp != "")
+                    {
+                        bulk.Column(9).Cell(1 + t).Value = ws.Worksheet.Column(3 + t).Cell(11).Value;
+                        t++;
+                    }
+                    {
+                        t++;
+                    }
+                }
+
+                for (int g = 1; g <= 4; g++)
+                {
+                    string temp = ws.Worksheet.Column(3 + g).Cell(12).Value.ToString();
+                    if (temp != "")
+                    {
+                        bulk.Column(11).Cell(1 + g).Value = ws.Worksheet.Column(3 + g).Cell(12).Value;
+                        g++;
+                    }
+                    {
+                        g++;
+                    }
+                }
+
+
+                
+                running = true;
                 int j = 1;
+                int f = 1;
                 while (running)
                 {
 
-                    string temp = ws.Worksheet.Column(2).Cell(11 + j).ToString();
+                    string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
                     if (temp.StartsWith("Udstyr:"))
                     {
                         running = false;
@@ -77,12 +129,117 @@ namespace XLXSConverter
                     }
                     else
                     {
-                        bulk.Worksheet.Column(6).Cell(1 + j).Value = ws.Worksheet.Column(2).Cell(11 + j).Value;
+                        bulk.Worksheet.Column(6).Cell(1 + f).Value = ws.Worksheet.Column(4).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(22).Cell(1 + f).Value = ws.Worksheet.Column(4).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(21).Cell(1 + f).Value = ws.Worksheet.Column(4).Cell(13 + j).Value;
                         j++;
+                        f++;
                     }
                 }
 
-                
+                running = true;
+                j = 1;
+                f = 1;
+                while (running)
+                {
+
+                    string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
+                    if (temp.StartsWith("Udstyr:"))
+                    {
+                        running = false;
+                    }
+                    else if (temp == "")
+                    {
+                        j++;
+                    }
+                    else
+                    {
+                        bulk.Worksheet.Column(6).Cell(1 + f).Value = ws.Worksheet.Column(5).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(22).Cell(1 + f).Value = ws.Worksheet.Column(5).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(21).Cell(1 + f).Value = ws.Worksheet.Column(5).Cell(13 + j).Value;
+                        j++;
+                        f++;
+                    }
+                }
+
+                running = true;
+                j = 1;
+                while (running)
+                {
+
+                    string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
+                    if (temp.StartsWith("Udstyr:"))
+                    {
+                        running = false;
+                    }
+                    else if (temp == "")
+                    {
+                        j++;
+                    }
+                    else
+                    {
+                        bulk.Worksheet.Column(6).Cell(1 + f).Value = ws.Worksheet.Column(6).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(22).Cell(1 + f).Value = ws.Worksheet.Column(6).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(21).Cell(1 + f).Value = ws.Worksheet.Column(6).Cell(13 + j).Value;
+                        j++;
+                        f++;
+                    }
+                }
+
+                running = true;
+                j = 1;
+                while (running)
+                {
+
+                    string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
+                    if (temp.StartsWith("Udstyr:"))
+                    {
+                        running = false;
+                    }
+                    else if (temp == "")
+                    {
+                        j++;
+                    }
+                    else
+                    {
+                        bulk.Worksheet.Column(6).Cell(1 + f).Value = ws.Worksheet.Column(7).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(22).Cell(1 + f).Value = ws.Worksheet.Column(7).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(21).Cell(1 + f).Value = ws.Worksheet.Column(7).Cell(13 + j).Value;
+                        j++;
+                        f++;
+                    }
+                }
+
+                running = true;
+                j = 1;
+                while (running)
+                {
+
+                    string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
+                    if (temp.StartsWith("Udstyr:"))
+                    {
+                        running = false;
+                    }
+                    else if (temp == "")
+                    {
+                        j++;
+                    }
+                    else
+                    {
+                        bulk.Worksheet.Column(6).Cell(1 + f).Value = ws.Worksheet.Column(8).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(22).Cell(1 + f).Value = ws.Worksheet.Column(8).Cell(12 + j).Value;
+                        bulk.Worksheet.Column(21).Cell(1 + f).Value = ws.Worksheet.Column(8).Cell(13 + j).Value;
+                        j++;
+                        f++;
+                    }
+                }
+
+                if ()
+                {
+
+                }
+
+
             }
             
         }
