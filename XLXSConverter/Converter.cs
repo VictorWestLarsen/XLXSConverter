@@ -22,7 +22,7 @@ namespace XLXSConverter
             for (int i = 1; i < 195; i++)
             {
                 bool running = true;
-                var ws = from.Worksheet(i);
+                var ws = from.Worksheet(1 + i);
                 ws.Worksheet.Column(8).Cell(3);
                 bulk.Column(2).Cell(1 + i).Value = ws.Worksheet.Column(8).Cell(3).Value; // sets model and make
                 bulk.Column(20).Cell(1 + i).Value = ws.Worksheet.Column(8).Cell(4).Value; // sets modelperiod
@@ -234,8 +234,26 @@ namespace XLXSConverter
                     }
                 }
 
-                if ()
+                running = true;
+                j = 1;
+                while (running)
                 {
+                    string temp = ws.Worksheet.Column(9).Cell(12 + j).ToString();
+
+                    if (temp.StartsWith("Udstyr:"))
+                    {
+                        running = false;
+                    }
+                    else if(temp == "")
+                    {
+                        j++;
+                    }
+                    else
+                    {
+                       bulk.Worksheet.Column(15).Cell(1 + j).Value = ws.Worksheet.Column(9).Cell(12 + j).Value;
+                        j++;
+                    }
+
 
                 }
 
