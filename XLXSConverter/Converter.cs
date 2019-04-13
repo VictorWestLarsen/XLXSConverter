@@ -21,18 +21,9 @@ namespace XLXSConverter
 
             for (int i = 1; i < 195; i++)
             {
-                bool running = true;
-                var ws = from.Worksheet(1 + i);
-                ws.Worksheet.Column(8).Cell(3);
-                bulk.Column(2).Cell(1 + i).Value = ws.Worksheet.Column(8).Cell(3).Value; // sets model and make
-                bulk.Column(20).Cell(1 + i).Value = ws.Worksheet.Column(8).Cell(4).Value; // sets modelperiod
-                bulk.Column(16).Cell(1 + i).Value = "DK"; //Country 
-                bulk.Column(17).Cell(1 + i).Value = "DK"; //Valuation country
-                
-                string split = ws.Worksheet.Column(8).Cell(5).Value.ToString();
-                string[] splitter = split.Split(' ');
-                string splitted = splitter[0];
-                int category = int.Parse(splitted);
+                var ws = from.Worksheet(i);
+
+                MakeModel.Add(ws.Worksheet.Column(8).Cell(2).Value.ToString());
 
                 if (category > 100 ) // sets category
                 {
@@ -133,9 +124,11 @@ namespace XLXSConverter
                         bulk.Worksheet.Column(22).Cell(1 + f).Value = ws.Worksheet.Column(4).Cell(12 + j).Value;
                         bulk.Worksheet.Column(21).Cell(1 + f).Value = ws.Worksheet.Column(4).Cell(13 + j).Value;
                         j++;
-                        f++;
+                        y++;
                     }
                 }
+            }
+        }
 
                 running = true;
                 j = 1;
@@ -215,47 +208,33 @@ namespace XLXSConverter
                 while (running)
                 {
 
-                    string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
-                    if (temp.StartsWith("Udstyr:"))
-                    {
-                        running = false;
-                    }
-                    else if (temp == "")
-                    {
-                        j++;
-                    }
-                    else
-                    {
-                        bulk.Worksheet.Column(6).Cell(1 + f).Value = ws.Worksheet.Column(8).Cell(12 + j).Value;
-                        bulk.Worksheet.Column(22).Cell(1 + f).Value = ws.Worksheet.Column(8).Cell(12 + j).Value;
-                        bulk.Worksheet.Column(21).Cell(1 + f).Value = ws.Worksheet.Column(8).Cell(13 + j).Value;
-                        j++;
-                        f++;
+                        string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
+                        if (temp.StartsWith("Udstyr:"))
+                        {
+                            k = 230;
+                        }
+                        else if (temp == "")
+                        {
+                            j++;
+                            k++;
+                        }
+                        else
+                        {
+                            ListPrice.Add(ws.Worksheet.Column(5).Cell(12 + j).Value.ToString());
+                            NewPrice.Add(ws.Worksheet.Column(5).Cell(12 + j + f).Value.ToString());
+                            j++;
+                            k++;
+
+                        }
                     }
                 }
+            }
+        }
 
-                running = true;
-                j = 1;
-                while (running)
-                {
-                    string temp = ws.Worksheet.Column(9).Cell(12 + j).ToString();
-
-                    if (temp.StartsWith("Udstyr:"))
-                    {
-                        running = false;
-                    }
-                    else if(temp == "")
-                    {
-                        j++;
-                    }
-                    else
-                    {
-                       bulk.Worksheet.Column(15).Cell(1 + j).Value = ws.Worksheet.Column(9).Cell(12 + j).Value;
-                        j++;
-                    }
-
-
-                }
+        public void WriteTo()
+        {
+            var to = new XLWorkbook("Bulk.xlsx");
+            var bulk = to.Worksheet(1);
 
 
             }
