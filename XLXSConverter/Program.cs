@@ -11,7 +11,10 @@ namespace XLXSConverter
         static void Main(string[] args)
         {
             Converter c = new Converter();
-            c.ConvertFrom();
+            c.StoreEngine();
+            c.WriteTo();
+            Console.WriteLine("Done");
+            Console.ReadKey();
         }
     }
 }
