@@ -188,8 +188,8 @@ namespace XLXSConverter
         public void StoreCategory()
         {
             var from = new XLWorkbook("Niveaulister1.xlsx");
-
-
+            
+            
             for (int i = 2; i < 195; i++)
             {
                 var ws = from.Worksheet(i);
@@ -199,7 +199,7 @@ namespace XLXSConverter
                 //string final = splitted.Trim('%');
                 int category = int.Parse(splitted);
 
-                if (category == 100) // sets category
+                if (category > 100) // sets category
                 {
                     Category.Add(CatPer);
                 }
@@ -212,42 +212,25 @@ namespace XLXSConverter
 
         }
 
-        public void StoreNewPrice()
+        public void StorePrice()
         {
             var from = new XLWorkbook("Niveaulister1.xlsx");
-            for (int i = 2; i <= 195; i++)
+
+            for (int i = 2; i < 195; i++)
             {
                 var ws = from.Worksheet(i);
                 int j = 1;
-                int f = 1;
-                for (int y = 0; y < 230; y++)
-
+                for (int k = 1; k < 152; k++)
                 {
-
-                    j = 1;
-                    f = 1;
-                    for (int k = 0; k < 230; k++)
+                    string temp = ws.Column(5).Cell(12 + j).Value.ToString();
+                    if (temp.Length > 3)
                     {
-
-                        string temp = ws.Worksheet.Column(2).Cell(12 + j).ToString();
-                        if (temp.StartsWith("Udstyr:"))
-                        {
-                            k = 230;
-                        }
-                        else if (temp == "")
-                        {
-                            j++;
-                            k++;
-                        }
-                        else
-                        {
-                            ListPrice.Add(ws.Worksheet.Column(5).Cell(12 + j).Value.ToString());
-                            NewPrice.Add(ws.Worksheet.Column(5).Cell(12 + j + f).Value.ToString());
-                            j++;
-                            k++;
-
-                        }
+                        NewPrice.Add(ws.Column(5).Cell(12+ k).Value.ToString());
+                        ListPrice.Add(ws.Column(4).Cell(12 + k + 1).Value.ToString());
+                        k += 2;
+                        j++;
                     }
+                    else j++;
                 }
             }
         }
@@ -258,7 +241,7 @@ namespace XLXSConverter
             var bulk = to.Worksheet(1);
 
 
-            foreach (string item in Engine)
+            foreach (string item in NewPrice)
             {
                 Console.WriteLine(item);
             }

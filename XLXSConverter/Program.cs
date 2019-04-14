@@ -11,7 +11,7 @@ namespace XLXSConverter
         static void Main(string[] args)
         {
             Converter c = new Converter();
-            c.StoreEngine();
+            c.StorePrice();
             c.WriteTo();
             Console.WriteLine("Done");
             Console.ReadKey();
